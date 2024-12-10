@@ -6,7 +6,7 @@
 */
 
 //Funciones
-//Función Login de inicio de sesión
+//Función inicio de sesión con solo tres intentos
 function inicio(usuario, password) {
 
     do {
@@ -62,7 +62,6 @@ acceso=inicio(usuario,password)//llamada a la función de inicio
 
 if (acceso){ // permite el acceso
     alert("Sesión iniciada")
-    continuar="no"
     do{//para continuar en el sistema
         cant_maquinarias = prompt("Cantidad de maquinarias que salen ahora")
         cantidad_galones_petrolio = cantidadPetroleo(cant_maquinarias)
