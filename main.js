@@ -48,6 +48,8 @@ function cantidadPetroleo(cant_maquinarias) {
     return sum_cant_peroleo
 }
 
+
+
 //creacion de variables
 alert("Bienvenido al sistema MBRegister. Cálculo total de Petróleo consumidos por las maquinarias")
 let usuario = prompt("Ingresar su usuario")
@@ -56,6 +58,8 @@ let password = prompt("IngreseContraseña")
 let acceso = false; //Acceso inicializado en falso
 let MAX_INTENTO = 3; //Límite máximo de intentos para ingresar al sistema
 let cant_intentos = 1; //Cantidad de intentos permitidos
+
+
 
 acceso=inicio(usuario,password)//llamada a la función de inicio
 
@@ -71,6 +75,7 @@ if (acceso){ // permite el acceso
 }else{ //
     alert("intentrelo más tarde")
 }
+
 
 
 
