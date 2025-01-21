@@ -1,80 +1,129 @@
-/*
-    Gestionar el inventario de recursos (herramientas, maquinarias y equipos)
+let maquinarias = [];
 
-    Cálculo de la cantidad total de petrolio en galones usado por las maquianrias en un día de trabajo.
-
-*/
-
-//Funciones
-//Función inicio de sesión con solo tres intentos
-function inicio(usuario, password) {
-
-    do {
-        if (usuario === "mar" && password === "123") { //si la condición es verdadera, cumple.
-            acceso = true;
-            break;
-        } else if (usuario === "" || usuario === null || password === null || password === "") { //si la condicón continiene null o vacios
-            cant_intentos += 1;
-            if(cant_intentos>MAX_INTENTO){
-                break;
-            }
-            alert("Upps, Uno de los campos esta vacio")
-            usuario = prompt("Ingresar su usuario")
-            password = prompt("Ingrese su Contraseña")
-        }
-        else{ // en otros casos cunado no coinside el usuario o contraseña
-            cant_intentos+=1;
-            if (cant_intentos > MAX_INTENTO) {
-                break;
-            }
-            alert("Acceso denegado, Vuelva a intentarlo")
-            usuario = prompt("Ingresar su usuario")
-            password = prompt("IngreseContraseña")
-        }
-    } while (cant_intentos <= MAX_INTENTO)
-
-    return acceso//Retorno
-}
-/*
-    Cálculo de cantidad de consumo de petroleo de las maquinarias
-*/
-function cantidadPetroleo(cant_maquinarias) {
-    let galon = 0;
-    sum_cant_peroleo = 0;
-    for (let i = 0; i < cant_maquinarias; i++) {
-        galon = prompt("Cantidad de galones asignadas a la Maquina" + (1 + i));
-        sum_cant_peroleo += parseFloat(galon);
+// Cargar datos desde localStorage
+function cargarDatos() {
+    const datosGuardados = localStorage.getItem("maquinarias");
+    if (datosGuardados) {
+        maquinarias = JSON.parse(datosGuardados);
+    } else {
+        // Inicializar con dos maquinarias si no hay datos guardados
+        maquinarias = [
+            {
+                id: 1,
+                tipo: "Excavadora",
+                modelo: "CAT 320D",
+                anio: 2019,
+                estado: "Operativo",
+                combustible: "Diesel",
+                horasUso: 1200,
+                repuestos: ["Filtro de aire", "Aceite hidráulico"],
+                consumos: { combustible: 1500, aceite: 50 },
+            },
+            {
+                id: 2,
+                tipo: "Bulldozer",
+                modelo: "Komatsu D85",
+                anio: 2018,
+                estado: "Mantenimiento",
+                combustible: "Diesel",
+                horasUso: 2500,
+                repuestos: ["Cadenas", "Rodillos"],
+                consumos: { combustible: 3000, aceite: 100 },
+            },
+        ];
+        guardarDatos(); // Guardar las maquinarias iniciales
     }
-    return sum_cant_peroleo
 }
 
-
-
-//creacion de variables
-alert("Bienvenido al sistema MBRegister. Cálculo total de Petróleo consumidos por las maquinarias")
-let usuario = prompt("Ingresar su usuario")
-let password = prompt("IngreseContraseña")
-
-let acceso = false; //Acceso inicializado en falso
-let MAX_INTENTO = 3; //Límite máximo de intentos para ingresar al sistema
-let cant_intentos = 1; //Cantidad de intentos permitidos
-
-
-
-acceso=inicio(usuario,password)//llamada a la función de inicio
-
-
-if (acceso){ // permite el acceso
-    alert("Sesión iniciada")
-    do{//para continuar en el sistema
-        cant_maquinarias = prompt("Cantidad de maquinarias que salen ahora")
-        cantidad_galones_petrolio = cantidadPetroleo(cant_maquinarias)
-        alert("Las " + cant_maquinarias + " maquinarias consumen un total de " + cantidad_galones_petrolio + " galones por día.")
-        continuar=prompt("Desea continuar => si o salir => no")
-    }while(continuar==="si")// condición
-}else{ //
-    alert("intentrelo más tarde")
+// Guardar datos en localStorage
+function guardarDatos() {
+    localStorage.setItem("maquinarias", JSON.stringify(maquinarias));
 }
+
+// Mostrar maquinarias en el DOM
+function mostrarMaquinarias(maqs) {
+    const contenedor = document.getElementById("maquinarias");
+    contenedor.innerHTML = "";
+
+    maqs.forEach((maq) => {
+        const maquinariaHTML = `
+            <h2>ID: ${maq.id}, Tipo: ${maq.tipo}, Modelo: ${maq.modelo}</h2>
+            <p>Año: ${maq.anio}, Estado: ${maq.estado}, Combustible: ${maq.combustible}</p>
+            <p>Horas de Uso: ${maq.horasUso}</p>
+            <p>Repuestos: ${maq.repuestos.join(", ")}</p>
+            <p>Consumos (Combustible: ${maq.consumos.combustible}L, Aceite: ${maq.consumos.aceite}L)</p>
+            <hr>
+        `;
+        contenedor.insertAdjacentHTML("beforeend", maquinariaHTML);
+    });
+}
+
+// Agregar nueva maquinaria
+function agregarMaquinaria(event) {
+    event.preventDefault();
+    const tipo = document.getElementById("tipo").value;
+    const modelo = document.getElementById("modelo").value;
+    const anio = parseInt(document.getElementById("anio").value);
+    const estado = document.getElementById("estado").value;
+    const combustible = document.getElementById("combustible").value;
+    const horasUso = parseInt(document.getElementById("horasUso").value);
+    const repuestos = document.getElementById("repuestos").value.split(",");
+    const consumoCombustible = parseFloat(document.getElementById("consumoCombustible").value);
+    const consumoAceite = parseFloat(document.getElementById("consumoAceite").value);
+
+    const nuevaMaquinaria = {
+        id: maquinarias.length + 1,
+        tipo,
+        modelo,
+        anio,
+        estado,
+        combustible,
+        horasUso,
+        repuestos,
+        consumos: {
+            combustible: consumoCombustible,
+            aceite: consumoAceite,
+        },
+    };
+
+    maquinarias.push(nuevaMaquinaria);
+    guardarDatos();
+    alert("Maquinaria agregada correctamente.");
+    document.getElementById("formularioAgregar").reset();
+}
+
+// Filtrar por tipo de maquinaria
+function filtrarPorTipo(event) {
+    event.preventDefault();
+    const tipo = document.getElementById("tipoBuscar").value;
+    const resultado = maquinarias.filter((maq) => maq.tipo.toLowerCase() === tipo.toLowerCase());
+    if (resultado.length > 0) {
+        mostrarMaquinarias(resultado);
+    } else {
+        alert(`No se encontraron maquinarias del tipo "${tipo}".`);
+    }
+}
+
+// Filtrar por estado
+function filtrarPorEstado(event) {
+    event.preventDefault();
+    const estado = document.getElementById("estadoBuscar").value;
+    const resultado = maquinarias.filter((maq) => maq.estado.toLowerCase() === estado.toLowerCase());
+    if (resultado.length > 0) {
+        mostrarMaquinarias(resultado);
+    } else {
+        alert(`No se encontraron maquinarias en estado "${estado}".`);
+    }
+}
+
+// Eventos
+document.getElementById("formularioAgregar").addEventListener("submit", agregarMaquinaria);
+document.getElementById("btnMostrar").addEventListener("click", () => mostrarMaquinarias(maquinarias));
+document.getElementById("formularioBuscarTipo").addEventListener("submit", filtrarPorTipo);
+document.getElementById("formularioBuscarEstado").addEventListener("submit", filtrarPorEstado);
+
+// Cargar datos al inicio
+cargarDatos();
 
 
 

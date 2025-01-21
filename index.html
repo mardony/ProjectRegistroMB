@@ -4,10 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <h1>Registro de Maquinarias</h1>
+
+    <!-- Formulario para agregar maquinaria -->
+    <form id="formularioAgregar">
+        <label for="tipo">Tipo:</label>
+        <input type="text" id="tipo" name="tipo"><br><br>
+        <label for="modelo">Modelo:</label>
+        <input type="text" id="modelo" name="modelo"><br><br>
+        <label for="anio">Año:</label>
+        <input type="number" id="anio" name="anio"><br><br>
+        <label for="estado">Estado:</label>
+        <input type="text" id="estado" name="estado"><br><br>
+        <label for="combustible">Combustible:</label>
+        <input type="text" id="combustible" name="combustible"><br><br>
+        <label for="horasUso">Horas de Uso:</label>
+        <input type="number" id="horasUso" name="horasUso"><br><br>
+        <label for="repuestos">Repuestos:</label>
+        <input type="text" id="repuestos" name="repuestos"><br><br>
+        <label for="consumoCombustible">Consumo de Combustible (L):</label>
+        <input type="number" id="consumoCombustible" name="consumoCombustible"><br><br>
+        <label for="consumoAceite">Consumo de Aceite (L):</label>
+        <input type="number" id="consumoAceite" name="consumoAceite"><br><br>
+        <button type="submit">Agregar Maquinaria</button>
+    </form>
+
+    <button id="btnMostrar">Mostrar Maquinarias</button>
+
+    <!-- Formulario para buscar por tipo -->
+    <form id="formularioBuscarTipo">
+        <label for="tipoBuscar">Buscar por Tipo:</label>
+        <input type="text" id="tipoBuscar" name="tipoBuscar">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <!-- Formulario para buscar por estado -->
+    <form id="formularioBuscarEstado">
+        <label for="estadoBuscar">Buscar por Estado:</label>
+        <input type="text" id="estadoBuscar" name="estadoBuscar">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <div id="maquinarias"></div>
+
+
+
     <!-- <script src="main.js"></script> -->
-    <script src="prinicipal.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
