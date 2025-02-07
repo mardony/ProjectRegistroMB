@@ -1,59 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestión de Maquinarias y Asignaciones</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body>
+    <div class="container">
+        <!-- Columna Izquierda: Formulario de Agregar Maquinaria -->
+        <div class="left-section">
+            <h2>Agregar Maquinaria</h2>
+            <form id="formularioAgregar">
+                <input type="text" id="tipo" placeholder="Tipo de maquinaria" required>
+                <input type="text" id="modelo" placeholder="Modelo" required>
+                <input type="number" id="anio" placeholder="Año" required>
+                <input type="text" id="estado" placeholder="Estado" required>
+                <input type="text" id="combustible" placeholder="Combustible" required>
+                <input type="number" id="horasUso" placeholder="Horas de uso" required>
+                <input type="text" id="repuestos" placeholder="Repuestos (separados por coma)" required>
+                <input type="number" id="consumoCombustible" placeholder="Consumo de Combustible (L)" required>
+                <input type="number" id="consumoAceite" placeholder="Consumo de Aceite (L)" required>
+                <button type="submit">Agregar Maquinaria</button>
+            </form>
+        </div>
 
-    <h1>Registro de Maquinarias</h1>
+        <!-- Columna Derecha: Navegación, Búsqueda y Listado -->
+        <div class="right-section">
+            <div class="nav-buttons">
+                <button id="btnMostrarMaquinarias">Mostrar Maquinarias</button>
+                <button id="btnMostrarOperarios">Mostrar Operarios</button>
+                <button id="btnMostrarMaquinariasAsignadas">Mostrar Maquinarias Asignadas</button>
+            </div>
 
-    <!-- Formulario para agregar maquinaria -->
-    <form id="formularioAgregar">
-        <label for="tipo">Tipo:</label>
-        <input type="text" id="tipo" name="tipo"><br><br>
-        <label for="modelo">Modelo:</label>
-        <input type="text" id="modelo" name="modelo"><br><br>
-        <label for="anio">Año:</label>
-        <input type="number" id="anio" name="anio"><br><br>
-        <label for="estado">Estado:</label>
-        <input type="text" id="estado" name="estado"><br><br>
-        <label for="combustible">Combustible:</label>
-        <input type="text" id="combustible" name="combustible"><br><br>
-        <label for="horasUso">Horas de Uso:</label>
-        <input type="number" id="horasUso" name="horasUso"><br><br>
-        <label for="repuestos">Repuestos:</label>
-        <input type="text" id="repuestos" name="repuestos"><br><br>
-        <label for="consumoCombustible">Consumo de Combustible (L):</label>
-        <input type="number" id="consumoCombustible" name="consumoCombustible"><br><br>
-        <label for="consumoAceite">Consumo de Aceite (L):</label>
-        <input type="number" id="consumoAceite" name="consumoAceite"><br><br>
-        <button type="submit">Agregar Maquinaria</button>
-    </form>
+            <h2>Búsqueda</h2>
+            <form id="formularioBuscarTipo">
+                <input type="text" id="tipoBuscar" placeholder="Buscar por Tipo">
+                <button type="submit">Buscar Tipo</button>
+            </form>
+            <form id="formularioBuscarEstado">
+                <input type="text" id="estadoBuscar" placeholder="Buscar por Estado">
+                <button type="submit">Buscar Estado</button>
+            </form>
+            <button id="btnMostrarTodos">Mostrar Todas</button>
 
-    <button id="btnMostrar">Mostrar Maquinarias</button>
+            <!-- Contenedores para mostrar cada vista -->
+            <div id="contenedorMaquinarias" class="listado"></div>
+            <div id="contenedorOperarios" class="listado" style="display: none;"></div>
+            <div id="contenedorMaquinariasAsignadas" class="listado" style="display: none;"></div>
+        </div>
+    </div>
 
-    <!-- Formulario para buscar por tipo -->
-    <form id="formularioBuscarTipo">
-        <label for="tipoBuscar">Buscar por Tipo:</label>
-        <input type="text" id="tipoBuscar" name="tipoBuscar">
-        <button type="submit">Buscar</button>
-    </form>
-
-    <!-- Formulario para buscar por estado -->
-    <form id="formularioBuscarEstado">
-        <label for="estadoBuscar">Buscar por Estado:</label>
-        <input type="text" id="estadoBuscar" name="estadoBuscar">
-        <button type="submit">Buscar</button>
-    </form>
-
-    <div id="maquinarias"></div>
-
-
-
-    <!-- <script src="main.js"></script> -->
     <script src="main.js"></script>
 </body>
+
 </html>
